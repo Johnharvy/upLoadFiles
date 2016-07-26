@@ -6,11 +6,12 @@
     <script src="js/EventUtil.js"></script>
     <title>uploadFile</title>
     <style>
-        #a1{width:100px;height:100px;background: #aaaaaa;}
+        #a1{width:100px;height:100px;background: #aaaaaa;text-align:center;line-height:100px;color:rgba(81, 49, 202, 0.72);
+        margin:150px auto;}
     </style>
 </head>
 <body>
-<div id="a1"></div>
+<div id="a1">拖拽到此</div>
 <div id="out-input"></div>
 <script>
     var a1=document.getElementById("a1");
@@ -45,7 +46,6 @@
                 },
                 error:function(r){
                     alert("文件上传出错！");
-
                 }
             });
         }
