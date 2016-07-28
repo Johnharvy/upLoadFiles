@@ -6,13 +6,17 @@
     <script src="js/EventUtil.js"></script>
     <title>uploadFile</title>
     <style>
-        #a1{width:100px;height:100px;background: #aaaaaa;text-align:center;line-height:100px;color:rgba(81, 49, 202, 0.72);
-        margin:150px auto;}
+        #test_box{width:300px;height:auto; margin:150px auto;}
+        #a1{width:100px;height:100px;background: #aaaaaa;text-align:center;line-height:100px;color:rgba(81, 49, 202, 0.72);margin:0px auto;
+       }
+       #out-input{text-align: center;}
     </style>
 </head>
 <body>
-<div id="a1">拖拽到此</div>
-<div id="out-input"></div>
+    <div id="test_box">
+        <div id="a1">拖拽到此</div>
+        <div id="out-input"></div>
+    </div>
 <script>
     var a1=document.getElementById("a1");
     function handleEvent(event){
