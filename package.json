@@ -10,7 +10,5 @@
     "jade": "*",
     "connect-multiparty": "^2.0.0"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }
