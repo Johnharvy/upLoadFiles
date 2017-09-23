@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded());
 app.use(methodOverride());
 // app.use(router);
 app.use(express.static(path.join(__dirname)));
+app.set('views', path.join(__dirname, 'views'));
 
 exports.app=app;
 
