@@ -24,10 +24,10 @@ app.use(express.static(path.join(__dirname)));
 
 exports.app=app;
 var uploadAction=require("./Action/fileUpload");
-//Â·ÓÉÊÂ¼ş¼àÌı
+//Â·ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
 
 uploadAction.uploadTest.uploadFile();
-//ÎÄ¼şÉÏ´«¼àÌı
+//ï¿½Ä¼ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½
 
 // development only
 if ('development' == app.get('env')) {
@@ -37,7 +37,7 @@ if ('development' == app.get('env')) {
 
 app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function(){
+http.createServer(app).listen(4000, function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
