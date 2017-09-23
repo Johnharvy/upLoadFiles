@@ -20,7 +20,7 @@ var errorhandler = require("errorhandler");
 // var router = require("router");
 
 // all environments
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT || 8080);
 app.set('view engine', 'jade');
 // app.use(express.favicon());
 app.use(logger('dev'));
@@ -47,7 +47,7 @@ if ('development' == app.get('env')) {
 
 app.get('/users', user.list);
 
-http.createServer(app).listen(4000, function(){
+http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
