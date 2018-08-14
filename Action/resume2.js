@@ -13,15 +13,12 @@ var app=App.app;
 
 var fileStreamsCache = {}
 
-
    
  function resume(){
      app.post('/uploadFileStream2',function(req, res){
            getData(req, res)
      })
  }
-
-
 
  async function  getData(req, res){
     var multipart = require('multiparty');

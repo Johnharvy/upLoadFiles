@@ -86,8 +86,8 @@
                             /*如果是线上，去掉定时，直接callback()，
                             这样写是为方便，本地测试看到进度条变化
                             因为本地做上传测试是秒传，没有时间等待*/
-                           /*  setTimeout(resolve, 50); */
-                           resolve()
+                            setTimeout(resolve, 50);
+                           /* resolve() */
                         }
                     });
                 })
