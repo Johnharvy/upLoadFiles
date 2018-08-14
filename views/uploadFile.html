@@ -7,9 +7,8 @@
     <title>uploadFile</title>
     <style>
         #test_box{width:300px;height:auto; margin:150px auto;}
-        #a1{width:100px;height:100px;background: #aaaaaa;text-align:center;line-height:100px;color:rgba(81, 49, 202, 0.72);margin:0px auto;
-       }
-       #out-input{text-align: center;}
+        #a1{width:100px;height:100px;background: #aaaaaa;text-align:center;line-height:100px;color:rgba(81, 49, 202, 0.72);margin:0px auto;}
+        #out-input{text-align: center;}
     </style>
 </head>
 <body>
@@ -20,23 +19,28 @@
 <script>
     var a1=document.getElementById("a1");
     function handleEvent(event){
-        var info ="",
+        var info ="<br>",
                 output= document.getElementById("out-input"),
                 files,i,len;
                
         EventUtil.preventDefault(event); //阻止事件的默认行为
+
         var formData =new FormData();
         if(event.type == "drop"){
-            files=event.dataTransfer.files;
+            files = event.dataTransfer.files;
+            console.log(files,'files')
             i = 0;
             len= files.length;
 
             while( i< len){
                 info += files[i].name +"("+ files[i].type + "," +files[i].size +"bytes)<br/>";
-                formData.append("file"+i,files[i]);
+                formData.append("file" + i,files[i]);
                 i++;
             }
+
+            console.log(formData, 'formData2')
             output.innerHTML = info;
+
             $.ajax({
                 type:"post",
                 url:"/uploadFile",

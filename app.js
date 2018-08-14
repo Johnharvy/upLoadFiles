@@ -3,6 +3,7 @@
  */
 
 var express = require('express');
+require("babel-core/register");
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
@@ -17,6 +18,7 @@ var logger = require("morgan");
 var methodOverride = require("method-override");
 var bodyParser = require('body-parser');
 var errorhandler = require("errorhandler");
+
 // var router = require("router");
 
 // all environments
@@ -34,9 +36,16 @@ app.set('views', path.join(__dirname, 'views'));
 exports.app=app;
 
 var uploadAction=require("./Action/fileUpload");
+var resumeAction=require("./Action/resume");
+var resumeAction2=require("./Action/resume2");
+var resumeAction3=require("./Action/resume3");
+
 //·���¼�����
 console.log(uploadAction);
 uploadAction.uploadTest.uploadFile();
+resumeAction.resume()
+resumeAction2.resume()
+resumeAction3.upload()
 //�ļ��ϴ�����
 
 // development only

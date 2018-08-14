@@ -10,7 +10,7 @@ var uploadTest={};
 
 function uploadFile(){
     app.post("/uploadFile", multipart(),function(req,res) {
-
+       console.log(req,'123')
        var i=0;
        while(i != null){
            if(req.files["file"+i]) upLoad(i);
