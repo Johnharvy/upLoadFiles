@@ -1,5 +1,5 @@
 /**
- *  断点续传
+ *  分片上传
  */
 var express = require("express");
 var http = require("http");

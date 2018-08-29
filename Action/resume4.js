@@ -1,6 +1,7 @@
 /**
- *   带进度条的分片上传
+ *  断点续传
  */
+
 var express = require("express");
 var http = require("http");
 var multipart = require('connect-multiparty');
@@ -12,9 +13,8 @@ var path = require('path');
 var fs = require("fs");
 var app=App.app;
 
-
 function upload(){
-    app.all('/upload', function(req,res){
+    app.all('/uploadAgain', function(req,res){
         sliceUpload(req, res)
     })
 }
@@ -23,13 +23,13 @@ async function sliceUpload(req, res) {
     var fs = require('fs');
     var multiparty = require('multiparty'); //文件上传模块
     var form = new multiparty.Form(); //新建表单
-    //设置编辑
+
     form.encoding = 'utf-8';
-    //设置文件存储路径
     form.uploadDir = "temp/"; // "Uploads/";
-    //设置单文件大小限制
+
     // form.maxFilesSize = 200 * 1024 * 1024;
     /*form.parse表单解析函数，fields是生成数组用获传过参数，files是bolb文件名称和路径*/
+    
     try {
         let [fields, files] = await new Promise((resolve, reject) => {
             form.parse(req, (err, fields, files) => {
@@ -41,10 +41,8 @@ async function sliceUpload(req, res) {
 
         files = files['data'][0]; //获取bolb文件
         var index = fields['index'][0]; //当前片数
-
         var total = fields['total'][0]; //总片数
         var name = fields['name'][0]; //文件名称
-        console.log(name, 'name')
         var url = 'temp/' + name + index; //临时bolb文件新名字
         fs.renameSync(files.path, url); //修改临时文件名字
 
@@ -61,12 +59,6 @@ async function sliceUpload(req, res) {
                 pathname = 'Uploads/' + myDate + name;
             }
            
-            /*进行合并文件，先创建可写流，再把所有BOLB文件读出来，
-                流入可写流，生成文件
-                fs.createWriteStream创建可写流   
-                aname是存放所有生成bolb文件路径数组:
-                ['Uploads/3G.rar1','Uploads/3G.rar2',...]
-            */
             var writeStream = fs.createWriteStream(pathname);
             var aname = [];
             for (let i = 1; i <= total; i++) {
@@ -84,8 +76,6 @@ async function sliceUpload(req, res) {
             }
             writeStream.end();
           
-
-        
             //返回给客服端，上传成功
             var data = JSON.stringify({
                 'code': 0,

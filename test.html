@@ -10,20 +10,20 @@
 <body>
     <!--需要合成图片，因为没法直接读取本地图片，所以将图片放在这里并隐藏-->
     <div style="display:none; width : 360px; height : 640px;">
-        <img id="starImg" style="height:100%; width:100%;display : block;" src="../img/IMG_3678.png" />
+         <img id="starImg" style="height:100%; width:100%;display : block;" src="./demo.jpg" />
     </div>
 
     <!--画布-->
-    <canvas id="main" height="1280" width="720" style="border:1px solid #d3d3d3;">
+    <canvas id="main" height="600" width="900" style="border:1px solid #d3d3d3;">
         
     </canvas>
 
     <!--输入框，失去焦点后自动执行hechen()-->
-    <!-- <input type="text" id="desc" onblur="merge()" value="" /> -->
+    <input type="text" id="desc" onblur="merge()" value="" />
     <!--saveImageInfo()生成照片并显示到另个网页-->
     <button onclick="saveImageInfo()">确认生成</button>
 
-    <div class = 'code' style = 'display: none'>000000</div>
+   <!--  <div class = 'code' style = 'display: none'>000000</div> -->
 
 
 <script>
@@ -38,8 +38,7 @@
         var mainCtx = getCanvasContext('main');
         var maxWidth = mainCtx.width;
         var maxHeight = mainCtx.height;
-        mainCtx.clearRect(0,0,360,640);
-
+        mainCtx.clearRect(0,0,600,600);
 
 
         //获取图片的实际路径
@@ -55,7 +54,7 @@
             //贴上文本
             mainCtx.font = "small-caps bold 3rem STXinwei";
             mainCtx.fillStyle = "#fff";
-            mainCtx.fillText($('.code').html(),350,940);
+            mainCtx.fillText($('.desc').val(),50,50);
             
         };
 
@@ -71,31 +70,9 @@
         var image = mycanvas.toDataURL("image/jpg"); //解析base64格式
         var dimg = new Image()
         dimg.src = image;
-
-        console.log( getBase64Image(dimg),111)
-
         var combinedImg = getBase64Image(dimg)
-
-        $.ajax({
-                type:"post",
-                url:"/uploadFile",
-                data: combinedImg,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,  //此处指定对上传数据不做默认的读取字符串的操作
-                success:function(rs){
-                    console.log(rs);
-                },
-                error:function(r){
-                    console.log('上传文件出错！')
-                }
-            });
-
-
-       
-     /*    var w = window.open('about:blank','image from canvas');
-        w.document.write("<img src='" + image + "' alt='from canvas'/>"); */
+        var w = window.open('about:blank','image from canvas');
+        w.document.write("<img src='" + image + "' alt='from canvas'/>");
     }
 
      //将 base64格式文件转化成blob对象
@@ -105,12 +82,14 @@
         canvas.height = img.height;
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, img.width, img.height);
-        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
-        var dataURL = canvas.toDataURL("image/"+ext);
+        var ext = img.src.substring( img.src.lastIndexOf(".") + 1 ).toLowerCase();
+        var dataURL = canvas.toDataURL("image/" + ext);
+        
         return {
           dataURL: dataURL,
           type: "image/"+ext
         };
+
       }
   
 

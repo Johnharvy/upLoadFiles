@@ -2,50 +2,28 @@
 
 <head>
     <title>异步分片上传文件(进度条)</title>
-
-    <style>
-      .dis{
-          margin-top : 3rem;
-          margin-left : 5rem;
-      }
-    </style>
 </head>
 
 <body>
     <div class="hei-bg" style="display:block;">
         <div class="user-info" style="display:block;">
-
-            <h3>请上传大文件</h3>
-
-            <div class="user-pic picw320" style = "padding : 1rem 0rem; font-size : 1.5rem;">
+            <div class="tc">请上传大文件</div>
+            <div class="user-pic picw320">
                 <input id="uppic" type="file">
             </div>
-            
+            <div id="jd" class="jdb">进度</div>
 
-         <div style = "display : flex; justify-content: center; align-items: center; width : 80%;">   
-
-            <div class = "dis">进度</div> 
-
-            <div  class = "f_bg dis" style = "background : rgba(177, 153, 153,1); width : 200px;height : 16px; border : 1px solid #000;">
-                 <div  class = "s_bg" style = "width : 0; height : 100%;background : chartreuse;"></div>
-            </div>
-
-            <div class = "jdb dis" style = "color : red;">0</div>
-
-            <div class = "stop dis"><button>暂停</button></div>
-
-         </div>   
-
-            <div style = "margin-top : 2rem;">
-                <input type="button" value="确定" id="userbtn"  style = "padding : 1rem 1rem; font-size : 1.5rem;" class="bg-main tc userbtn">
+            <div>
+                <input type="button" value="确定" id="userbtn" class="bg-main tc userbtn">
             </div>
         </div>
     </div>
 </body>
 <script src="/views/js/jquery.js"></script>
 <script>
+
+    var startIndex = 0 //文件片起始位置
     $(function () {
-        var curIndex = 0, allowUpload = true
         $('#userbtn').on('click', async function () {
             var d1 = new Date();
             let file = $("#uppic")[0].files[0], //上传文件主体
@@ -56,7 +34,10 @@
                 shardCount = Math.ceil(size / shardSize); //总片数
 
             try {
-                selectIndex(0)
+                for (let item = 0; item < shardCount; ++item) {
+                    await fn(item); //同步
+                }
+               
                 $('.jdb').append(' 上传成功');
                 var d2 = new Date();
                 console.log('共花费' + parseInt(d2 - d1) / 1000 + 's');
@@ -65,36 +46,13 @@
                 console.log(err);
             }
 
-
-             //暂停或者继续上传
-            $(".stop").on('click', function(){
-                allowUpload = !allowUpload
-                console.log(curIndex, 'curIndex')
-                selectIndex(curIndex)
-            })
-
-           /**
-            *  从第几片开始上传
-             */
-
-           async function selectIndex(index,callback){
-                var _index = index? index : 0
-                for (let item = _index; item < shardCount; ++item) {
-                        await fn(item); //异步
-                }
-
-            }
-
             /**
-             *   上传
              *   item为当前片段序号
               */
 
             function fn(item) {
                 return new Promise((resolve, reject) => {
-
-                    if(!allowUpload) {   curIndex = item; return false; } 
-                    var i = item
+                    var i = item;
                     var start = i * shardSize, //当前分片开始下标
                         end = Math.min(size, start + shardSize); //结束下标
 
@@ -104,6 +62,7 @@
                     form.append("name", name); //文件名字
                     form.append("total", shardCount); //总片数
                     form.append("index", i + 1); //当前片数
+                    
                     //Ajax提交
                     $.ajax({
                         url: "/upload",
@@ -126,9 +85,7 @@
                             //生成当前进度百分比
                             var jd = `${Math.round(succeed / shardCount * 100)}%`;
                             $('.jdb').html(jd);
-                            $('.s_bg').css({ width : jd})
-                            setTimeout(resolve, 50); 
-                           /* resolve() */
+                            setTimeout(resolve, 50);
                         }
                     });
                 })
