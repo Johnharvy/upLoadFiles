@@ -1,0 +1,76 @@
+<html>
+
+<head>
+    <title>异步分片上传文件(进度条)</title>
+
+    <style>
+      .dis{
+          margin-top : 3rem;
+          margin-left : 5rem;
+      }
+    </style>
+</head>
+
+<body>
+    <div class="hei-bg" style="display:block;">
+        <div class="user-info" style="display:block;">
+
+            <h3>请上传大文件</h3>
+
+            <div class="user-pic picw320" style = "padding : 1rem 0rem; font-size : 1.5rem;">
+                <input id="uppic" type="file">
+            </div>
+            
+
+         <div style = "display : flex; justify-content: center; align-items: center; width : 80%;">   
+
+            <div class = "dis">进度</div> 
+
+            <div  class = "f_bg dis" style = "background : rgba(177, 153, 153,1); width : 200px;height : 16px; border : 1px solid #000;">
+                 <div  class = "s_bg" style = "width : 0; height : 100%;background : chartreuse;"></div>
+            </div>
+
+            <div class = "jdb dis" style = "color : red;">0</div>
+
+            <div class = "stop dis"><button>暂停</button></div>
+
+         </div>   
+
+            <div style = "margin-top : 2rem;">
+                <input type="button" value="确定" id="userbtn"  style = "padding : 1rem 1rem; font-size : 1.5rem;" class="bg-main tc userbtn">
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/views/js/jquery.js"></script>
+<script src="/views/js/jquery.sliceFile.js"></script>
+
+<script>
+      
+
+    $('#userbtn').on('click', function(){
+            var d1 = new Date();
+            $.sliceFiles({
+                resumeDom  : document.querySelector('.stop'),
+                file   :  $("#uppic")[0].files[0] ,
+                sliceSize  : 10 * 1024,
+                apiUrl : '/upload',
+                success  : function(data,process){
+                    var jd = `${process}%`;
+                    $('.jdb').html(jd);
+                    $('.s_bg').css({ width : jd})   
+                },
+                fail : function(err){
+                    alert('上传失败!')
+                },
+                finish : function(){
+                    $('.jdb').append(' 上传成功');
+                        var d2 = new Date();
+                        console.log('共花费' + parseInt(d2 - d1) / 3600 + 's');
+                }
+            })
+        })
+     
+</script>
+
+</html>

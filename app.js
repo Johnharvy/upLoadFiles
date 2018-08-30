@@ -33,28 +33,21 @@ app.use(methodOverride());
 app.use(express.static(path.join(__dirname)));
 app.set('views', path.join(__dirname, 'views'));
 
-exports.app=app;
+exports.app = app;
 
 var uploadAction=require("./Action/fileUpload");
-var resumeAction=require("./Action/resume");
-var resumeAction2=require("./Action/resume2");
-var resumeAction3=require("./Action/resume3");
+var resumeAction=require("./Action/slice_to_same");
 
-//·���¼�����
-console.log(uploadAction);
+
 uploadAction.uploadTest.uploadFile();
 resumeAction.resume()
-resumeAction2.resume()
-resumeAction3.upload()
-//�ļ��ϴ�����
+
 
 // development only
 if ('development' == app.get('env')) {
   app.use(errorhandler());
 }
 
-
-app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
