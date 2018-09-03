@@ -52,7 +52,6 @@ async function sliceUpload(req, res) {
             }
            
             let writeStream = fs.createWriteStream(pathname);
-            let aname = [];
             for (let i = 1; i <= total; i++) {
                 let url = 'temp/' + name + i;
                 let data = await new Promise(function (resolve, reject) {

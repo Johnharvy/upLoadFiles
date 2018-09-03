@@ -7,6 +7,8 @@ require("babel-core/register");
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var opn = require('opn')
+var ip = require('ip')
 
 var app = express();
 var flash=require("connect-flash");
@@ -51,6 +53,10 @@ if ('development' == app.get('env')) {
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+  console.log(ip.address() + ':' + app.get('port') + '/views/sliceUpload.html')
+  opn('http://' + ip.address() + ':' + app.get('port') + '/views/sliceUpload.html').then( () => {
+     
+  })
 });
 
 

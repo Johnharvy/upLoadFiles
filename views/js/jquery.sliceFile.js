@@ -35,9 +35,9 @@
         //有指定阻断上传的dom
         if(options.resumeDom){
             async  function selectIndex(index){
-                let _index = index? index : 0
+                let _index = index? index : 0, _asyncs = []
                 for (let item = _index; item < shardCount; ++item) {
-                        await fn(item); //异步
+                        await fn(item); 
                 }
              }
 
@@ -55,11 +55,11 @@
              } 
              selectIndex(0)
         }
+        
         /**
              *   上传
              *   item为当前片段序号
          */
-
         function fn(item) {
             return new Promise((resolve, reject) => {
                if(!allowUpload) {  curIndex = item; return false; }  //阻断响应，上传失效
@@ -87,9 +87,16 @@
                     success: function (data) {
                         succeed++
                         let progress = Math.round(succeed / shardCount * 100)
+                        if(succeed / shardCount > 1) return;
                         options.success && options.success(data, progress)
-                        if(progress >= 1) options.finish && options.finish()
-                        if(options.resumeDom)   setTimeout(resolve, 0); 
+                        if(progress === 100) {
+                          
+                            if(options.resumeDom){
+                                $(options.resumeDom).off('click')
+                            }
+                            options.finish && options.finish();
+                            }
+                        if(options.resumeDom)    setTimeout(resolve, 0);  
                         else resolve()
                     },
                     fail : function(err){
@@ -99,6 +106,5 @@
                 });
             })
         }
- 
    }
 })(jQuery)
