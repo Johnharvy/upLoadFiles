@@ -55,7 +55,7 @@
              } 
              selectIndex(0)
         }
-        
+
         /**
              *   上传
              *   item为当前片段序号
@@ -90,7 +90,6 @@
                         if(succeed / shardCount > 1) return;
                         options.success && options.success(data, progress)
                         if(progress === 100) {
-                          
                             if(options.resumeDom){
                                 $(options.resumeDom).off('click')
                             }
