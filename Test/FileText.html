@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+     <div style = "width : 200px; margin : 0 auto;">
+        <input  type = "file" id = "file" />
+    </div>
+     <script>
+         var input  = document.getElementById("file"); //input file
+            input.onchange = function(){
+                var file = this.files[0];
+                if(!!file){
+                    //读取本地文件，以utf-8编码方式输出
+                    var reader = new FileReader();
+                    reader.readAsText(file,"utf-8");
+                    reader.onload = function(){
+                        //读取完毕后输出结果
+                        console.log(this.result);
+                    }
+                }
+        }
+     </script> 
+</body>
+</html>

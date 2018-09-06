@@ -20,10 +20,6 @@ var resumeAction=require("./Action/slice_to_same");
 uploadAction.uploadTest.uploadFile();
 resumeAction.resume()
 
-if ('development' == app.get('env')) {
-  app.use(errorhandler());
-}
-
 
 http.createServer(app).listen(app.get('port'), function(){
         opn('http://' + ip.address() + ':' + app.get('port') + '/views/sliceUpload.html')

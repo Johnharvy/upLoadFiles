@@ -3,7 +3,7 @@
  */
 let  express = require("express");
 let  http = require("http");
-let  multipart = require('connect-multiparty');
+/* let  multipart = require('connect-multiparty'); */
 require("babel-core/register");
 let  App = require("../app.js");
 let  path = require('path');
@@ -26,7 +26,7 @@ async function sliceUpload(req, res) {
     try {
         let [fields, files] = await new Promise((resolve, reject) => {
             form.parse(req, (err, fields, files) => {
-                if (err) reject('test err');
+                if (err)   console.warn('文件上传接收错误')
                 resolve([fields, files]);
             })
         })
@@ -34,7 +34,8 @@ async function sliceUpload(req, res) {
         files = files['data'][0]; 
         let index = fields['index'][0];
         let total = fields['total'][0];
-        let name = fields['name'][0]; 
+        let name = fields['name'][0];
+     
         let url = 'temp/' + name + index; 
         fs.renameSync(files.path, url); //修改临时文件名字
 
@@ -52,6 +53,7 @@ async function sliceUpload(req, res) {
             }
            
             let writeStream = fs.createWriteStream(pathname);
+            
             for (let i = 1; i <= total; i++) {
                 let url = 'temp/' + name + i;
                 let data = await new Promise(function (resolve, reject) {

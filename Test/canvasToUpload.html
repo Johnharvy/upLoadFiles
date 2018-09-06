@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas</title>
+
+    <style>
+      .canvas{
+          margin : 0 auto;
+          border : 1px solid #000;
+          display: block;
+      }
+    </style>
+</head>
+<body>
+     <canvas id = "app" class = 'canvas' width = "300" height = "600"></canvas>
+     <script>
+          //canvas对象
+          var container = document.getElementById('app');
+          //获取上下文
+          var cvs = container.getContext("2d");
+          cvs.fillStyle = '#000';
+          cvs.fillRect(0,0,150,300);
+
+          var cvs_2 = container.getContext("2d");
+          cvs_2.fillStyle = '#000'
+          cvs_2.fillRect(150,300,300,600 )
+
+          var cv3 = container.getContext("2d");
+          cv3.moveTo(300, 0);
+          cv3.lineTo(0,600);
+          cv3.stroke();
+
+          var cv4 = container.getContext("2d");
+          cv4.moveTo(150, 0);
+          cv4.lineTo(300,300);
+          cv4.stroke();
+
+          var cv5 = container.getContext("2d");
+          cv5.moveTo(0, 300);
+          cv5.lineTo(150,600);
+          cv5.stroke();
+
+
+           //转化成文件下载
+           container.toBlob( function(blob){
+                var link = document.createElement("a");
+                link.innerHTML = 'canvas文件';
+                link.download = 'canvas文件' ;
+                link.href = URL.createObjectURL(blob);
+                document.getElementsByTagName("body")[0].appendChild(link); 
+           })
+
+          
+     </script>
+</body>
+</html>

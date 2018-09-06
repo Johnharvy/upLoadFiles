@@ -1,0 +1,93 @@
+html,body{
+    font-size : 16px;
+    padding : 0;
+    margin : 0;
+
+} 
+
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dis{
+   margin-top : 3rem;
+   margin-left : 5rem;
+}
+
+.head{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.file_local{
+ font-size : 1.5rem;
+}
+
+.col-3{
+   width : 33.3%;
+   height : 3rem;
+   border : 0.5px solid salmon;
+   border-left : 0px;
+
+}
+
+.out{
+ border : 1px solid salmon;
+}
+
+.header{
+  font-size : 1.5rem;
+  font-weight : bold;
+  padding : 1rem auto;
+}
+
+.stop{
+padding : 0.1rem 1rem;
+background:  salmon;
+color : #fff;
+border-radius: 0.5rem;
+}
+
+#uppic{
+ width : 4rem;
+ color : #fff;
+}
+
+.f_bg{
+ top : 0;
+ left : 0;
+ background : rgba(177, 153, 153,1); 
+ width : 7rem;;
+ height : 16px;
+ border-radius: 0.5rem;
+}
+
+.out{
+ width : 99%;
+}
+
+.foot{
+ padding : 0.1rem 1rem;
+ background:  salmon;
+ color : #fff;
+ border-radius: 0.5rem;
+ }
+
+#fileName{
+ overflow: hidden;
+ text-overflow: ellipsis;
+ display : -webkit-box;
+ -webkit-line-clamp : 2;
+ -webkit-box-orient: vertical;
+}
+
+.foot{
+ padding: 0.25rem 1rem;
+ background: salmon;
+ color: #fff;
+ border-radius: 0.5rem;
+ font-size: 1rem;
+}
